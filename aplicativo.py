@@ -47,10 +47,13 @@ def logoutadministrador():
     session.pop('username', None)
     return redirect(url_for('Index'))
         
-        
 @aplicativo.route('/anadir_conductor')
 def añadir_conductor():
-    return 'Añadir Conductor'
+    return render_template ('anadir_conductor.html')
+
+@aplicativo.route('/guardar_conductor',methods=['POST'])
+def guardar_conductor():
+    return 'hola'
 
 @aplicativo.route('/editar_conductor')
 def editar_conductor():
