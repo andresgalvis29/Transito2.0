@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 		<html>
 		<head>
@@ -10,7 +11,15 @@
 <!-- se vincula al hoja de estilo para definir el aspecto del formulario de login--> 
 <link rel="shortcut icon" href="/static/rent-a-car.png" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/static/css/estilos2.css">
+
 		</head>
+		{%with messages = get_flashed_messages() %}
+		{%if messages%}
+		{%for messages in messages%}
+		<p>{{messages}}</p>
+		{%endfor%}
+		{%endif%}
+		{%endwith%}
 		<body>
 		 <div id="Contenedor">
 		 <div class="Icon">
@@ -18,10 +27,10 @@
                    <span class="glyphicon glyphicon-user"></span>
                  </div>
 <div class="ContentForm">
-		 	<form action="" method="post" name="FormEntrar">
+		 	<form action="/administrador" method="POST" name="FormEntrar">
 		 		<div class="input-group input-group-lg">
 				  <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
-				  <input type="email" class="form-control" name="correo" placeholder="Usuario" id="Correo" aria-describedby="sizing-addon1" required>
+				  <input type="text" class="form-control" name="Usuario" placeholder="Usuario" id="Usuario" aria-describedby="sizing-addon1" required>
 				</div>
 				<br>
 				<div class="input-group input-group-lg">

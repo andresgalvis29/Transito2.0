@@ -1,12 +1,14 @@
-from flask import Flask ,render_template, request, redirect,url_for, flash
+from flask import Flask ,render_template, request, redirect,url_for, flash,session
 from flask_mysqldb import MySQL
+import hashlib
 
 aplicativo = Flask(__name__)
-aplicativo.config['MYSQL_HOST'] = 'localhost'
+aplicativo.config['MYSQL_HOST'] = '127.0.0.1'
 aplicativo.config['MYSQL_USER'] = 'root'
-aplicativo.config['MYSQL_PASSWORD'] = 'password'
+aplicativo.config['MYSQL_PASSWORD'] = ''
 aplicativo.config['MYSQL_DB'] = 'Transito'
 mysql = MySQL(aplicativo)
+aplicativo.secret_key = '666'
 
 @aplicativo.route('/')
 def Index():
@@ -15,8 +17,37 @@ def Index():
 @aplicativo.route('/iniciar_sesion')
 def iniciar_sesion():
     return render_template('login.html')
-    
 
+@aplicativo.route('/administrador',methods=['GET','POST'])
+def administrador():
+    if request.method == 'POST' and 'Usuario' in request.form and 'contra' in request.form:
+        Usuario = request.form['Usuario']
+        contra = request.form['contra']
+        contraseña = (hashlib.sha1((contra).encode('utf-8')).hexdigest())
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM Policia WHERE usuario= %s AND contraseña=%s',(Usuario,contraseña,))
+        print(contraseña)
+        cuenta = cur.fetchone()
+        
+    
+    if cuenta:
+            session['loggedin'] = True
+            session['Usuario'] = cuenta[0]
+            session['contraseña'] = cuenta[1]
+            print(Usuario)
+            return render_template('admin.html')
+    else:
+        flash("Datos incorrectos","warning")
+        return render_template('login.html')
+
+@aplicativo.route('/logoutadministrador')
+def logoutadministrador():
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('username', None)
+    return redirect(url_for('Index'))
+        
+        
 @aplicativo.route('/anadir_conductor')
 def añadir_conductor():
     return 'Añadir Conductor'
