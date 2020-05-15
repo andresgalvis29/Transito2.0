@@ -47,13 +47,28 @@ def logoutadministrador():
     session.pop('username', None)
     return redirect(url_for('Index'))
         
-@aplicativo.route('/anadir_conductor')
+@aplicativo.route('/anadirconductor')
 def añadir_conductor():
-    return render_template ('anadir_conductor.html')
+    return render_template ('anadirconductor.html')
 
-@aplicativo.route('/guardar_conductor',methods=['POST'])
+@aplicativo.route('/guardarconductor',methods=['POST'])
 def guardar_conductor():
-    return 'hola'
+    if request.method == 'POST':
+        cedula = request.form['cedula']
+        nombre = request.form['nombre']
+        fechadenacimiento = request.form['fechadenacimiento']
+        direccion = request.form['direccion']
+        celular = request.form['celular']
+        print (cedula)
+        if (cedula and nombre and fechadenacimiento and direccion and celular != None):
+           cur = mysql.connection.cursor()
+           cur.execute('INSERT INTO Conductor (idConductor,NombreConductor,FechaNacimientoConductor,DireccionConductor,CelularConductor ) VALUES(%s,%s,%s,%s,%s)'
+           ,(cedula,nombre,fechadenacimiento,direccion,celular))
+           mysql.connection.commit() 
+           return 'datos guardados'
+        else: return 'No relleno todo los espacios'
+    else: return 'Error'
+
 
 @aplicativo.route('/editar_conductor')
 def editar_conductor():
