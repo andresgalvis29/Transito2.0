@@ -9,34 +9,14 @@
 
 </head>
 <body>
-    <form action="/guardarcarro" method="POST">
+    <form action="/guardarmulta" method="POST">
         <div class="container">
             <div  class="form-group" >
-                <input class="form-control" type="text" name="carro" placeholder="Placas">
+                <input class="form-control" type="text" name="multa" placeholder="codigo multa">
             </div>
     
             <div class="form-group">
-                <select name="marca" id="">
-                    {%for marca in marca %}
-                        <option value="{{marca[0]}}">{{marca[0]}}</option>
-		            {%endfor%}
-
-                </select>
-            </div>
-    
-            <div class="form-group">
-                <input class="form-control" type="date" name="fechadefabricacion" placeholder="fecha de fabricacion">
-            </div>
-    
-            <div class="form-group">
-                <input class="form-control" type="text" name="concesionaria" placeholder="concesionaria">
-            </div>
-    
-            <div class="form-group">
-                <input class="form-control" type="text" name="motor" placeholder="motor">
-            </div>
-
-            <div class="form-group">
+                <h5>persona multada:</h5>
                 <select name="conductor" id="">
                     {%for conductor in conductor %}
                         <option value="{{conductor[0]}}">{{conductor[0]}}</option>
@@ -46,7 +26,33 @@
             </div>
     
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Registrar Conductor</button>
+                <input class="form-control" type="date" name="fechademulta" placeholder="fecha de multa">
+            </div>
+    
+            <div class="form-group">
+                <input class="form-control" type="text" name="articulo" placeholder="Articulo infringido">
+            </div>
+    
+            <div class="form-group">
+                <input class="form-control" type="text" name="descripcion" placeholder="Descripcion de multa">
+            </div>
+
+            <div class="form-group">
+                <h5>guardia que puso la infraccion:</h5>
+                <select name="policia" id="">
+                    {%for policia in policia %}
+                        <option value="{{policia[0]}}">{{policia[0]}}</option>
+		            {%endfor%}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" type="text" name="valor" placeholder="Valor de multa">
+            </div>
+    
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Registrar Multa</button>
             </div>
         </div>
         

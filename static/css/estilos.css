@@ -179,6 +179,10 @@ header .textos-header{
     color: white;
 }
 
+.hover-galeria p a{
+    color: white;
+}
+
 .imagen-port:hover .hover-galeria{
     transform: scale(1);
 }

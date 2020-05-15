@@ -80,10 +80,50 @@ def añadir_carro():
     return render_template ('anadircarro.html',marca=datamarca,conductor=dataconductor)
 
 @aplicativo.route('/guardarcarro',methods=['GET','POST'])
+def guardar_carro():
+    if request.method == 'POST':
+        marca = request.form['marca']
+        carro = request.form['carro']
+        fechadefabricacion = request.form['fechadefabricacion']
+        concesionaria = request.form['concesionaria']
+        motor = request.form['motor']
+        conductor = request.form['conductor']
+        if (marca and carro and fechadefabricacion and concesionaria and motor and conductor != None):
+            cur = mysql.connection.cursor()
+            cur.execute('INSERT INTO Carro (idCarro,Concesionario,Motor,FechadeFabricacion,Conductor_idConductor,Marca_idMarca) VALUES(%s,%s,%s,%s,%s,%s)'
+            ,(carro,concesionaria,motor,fechadefabricacion,conductor,marca))
+            mysql.connection.commit()
+            return render_template('admin.html')
+        else: return 'no relleno los datos'
+    else: return 'error'
+
+@aplicativo.route('/anadirmulta',methods=['GET','POST'])
 def añadir_multa():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT idConductor FROM Conductor ')
+    dataconductor = cur.fetchall()
+    cur.execute('SELECT Usuario FROM Policia ')
+    datapolicia = cur.fetchall()
+    return render_template('anadirmulta.html',conductor=dataconductor,policia=datapolicia)
 
-    return 'Añadir Multa'
-
+@aplicativo.route('/guardarmulta',methods=['GET','POST'])
+def guardar_multa():
+    if request.method == 'POST':
+        multa = request.form['multa']
+        conductor = request.form['conductor']
+        fechademulta = request.form['fechademulta']
+        articulo = request.form['articulo']
+        descripcion = request.form['descripcion']
+        policia = request.form['policia']
+        valor = request.form['valor']
+        if(multa and conductor and fechademulta and articulo and descripcion and policia and valor != None):
+            cur = mysql.connection.cursor()
+            cur.execute('INSERT INTO Multa (CodigoMulta,ArticuloInfringido,Diamulta,ValorMulta,DescripcionMulta,Conductor_idConductor,Policia_Usuario) VALUES(%s,%s,%s,%s,%s,%s,%s)'
+            ,(multa,articulo,fechademulta,valor,descripcion,conductor,policia))
+            mysql.connection.commit()
+            return render_template('admin.html')
+        else: 'falta rellenar espacios'
+    else: 'error'
 
 
 if __name__ == '__main__':
