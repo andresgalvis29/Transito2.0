@@ -125,6 +125,66 @@ def guardar_multa():
         else: 'falta rellenar espacios'
     else: 'error'
 
+@aplicativo.route('/loginmulta')
+def pagar_multa():
+    return render_template('loginmulta.html')
+
+@aplicativo.route('/usuario1',methods=['GET','POST'])
+def pago_de_multa():
+    if request.method == 'POST' and 'Usuario' in request.form:
+        Usuario = request.form['Usuario']
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM Multa WHERE Conductor_idConductor= {0}'.format(Usuario))
+        print(Usuario)
+        cuenta = cur.fetchone()
+
+    if cuenta:
+            session['loggedin'] = True
+            session['Usuario'] = cuenta[0]
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM Multa WHERE Conductor_idConductor= {0}'.format(Usuario))
+            cuenta = cur.fetchall()
+            print(cuenta)
+            return render_template('multa.html',multa=cuenta)
+    else:
+        flash("")
+        return render_template('loginmulta.html')    
+
+@aplicativo.route('/pagar/<string:id>')
+def eliminar_multa(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE from Multa WHERE CodigoMulta = {0}'.format(id))
+    mysql.connection.commit()
+    flash("")
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('username', None)
+    return redirect(url_for('Index'))
+
+@aplicativo.route('/informacion',methods=['GET','POST'])
+def ver_datos():
+    return render_template('login2.html')
+
+@aplicativo.route('/datosusuario',methods=['GET','POST'])
+def ver_datos2():
+    if request.method == 'POST' and 'Usuario' in request.form:
+        Usuario = request.form['Usuario']
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM Conductor WHERE idConductor= {0}'.format(Usuario))
+        print(Usuario)
+        cuenta = cur.fetchone()
+    
+    if cuenta:
+            
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM Conductor WHERE idConductor= {0}'.format(Usuario))
+            cuenta = cur.fetchall()
+            print(cuenta)
+            return render_template('usuario.html',usuario=cuenta)
+    else:
+        flash("")
+        return render_template('loginmulta.html')    
+
 
 if __name__ == '__main__':
     aplicativo.run(port = 3000, debug = True)

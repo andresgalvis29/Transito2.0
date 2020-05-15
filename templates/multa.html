@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
+    <title>Pago de deudas</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Codigo de Multa</th>
+                    <th scope="col">Articulo Infringido</th>
+                    <th scope="col">Dia de la multa</th>
+                    <th scope="col">Valor de la multa</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Conductor multado</th>
+                    <th scope="col">Policia</th>
+        
+                </tr>
+            </thead>
+        
+            <tbody>
+                {% for multa in multa  %}
+                    <tr>
+                        <td>{{ multa.0 }}</td>
+                        <td>{{ multa.1 }}</td>
+                        <td>{{ multa.2 }}</td>
+                        <td>{{ multa.3 }}</td>
+                        <td>{{ multa.4 }}</td>
+                        <td>{{ multa.5 }}</td>
+                        <td>{{ multa.6 }}</td>
+        
+                        <td>
+                            <a href="/pagar/{{multa.0}}">Pagar multa</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</html>
+

@@ -1,8 +1,23 @@
+{%with messages = get_flashed_messages() %}
+		{%if messages%}
+		{%for messages in messages%}
+		<div class="alert alert-danger" role="alert">
+			 <a href="#" class="alert-link">Su multa ha sido pagada</a>
+			 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+		  </div>
+		{%endfor%}
+		{%endif%}
+		{%endwith%}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <title>Centro de transito</title>
     <link rel="shortcut icon" href="/static/rent-a-car.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/estilos.css">
@@ -12,8 +27,8 @@
     <header>
         <nav>
           <a href="#">Inicio</a>
-          <a href="#">Acerca de</a>
-          <a href="#">Soporte</a>
+          <a href="https://twitter.com/MinTransporteCo">Acerca de</a>
+          <a href="https://serviciosdetransito.com/index.php/contact-center">Soporte</a>
           <a href="http://127.0.0.1:3000/iniciar_sesion">Inicio sesion</a>
         </nav>
         <section class="textos-header">
@@ -41,21 +56,15 @@
                             <img src="/static/6348.jpg" alt="">
                             <div class="hover-galeria">
                                 <img src="/static/permit.png" alt="" >
-                                <p><a href="#">Pago de Multas</a></p>
+                                <p><a href="/loginmulta">Ver Multas</a></p>
                             </div>
                         </div>
-                        <div class="imagen-port" >
-                            <img src="/static/15686.jpg" alt="">
-                            <div class="hover-galeria">
-                                <img src="/static/permit.png" alt="">
-                                <p><a href="#">Ver Multas</a></p>
-                            </div>
-                        </div>
+                        
                         <div class="imagen-port">
                             <img src="/static/3005587.jpg" alt="">
                             <div class="hover-galeria">
                                 <img src="/static/permit.png" alt="">
-                                <p><a href="#">Ver informacion</a></p>
+                                <p><a href="/informacion">Ver informacion</a></p>
                             </div>
                         </div>
                     </div>
@@ -114,4 +123,6 @@
        
     </footer>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>
