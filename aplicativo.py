@@ -28,6 +28,7 @@ def administrador():
         cur.execute('SELECT * FROM Policia WHERE usuario= %s AND contraseña=%s',(Usuario,contraseña,))
         print(contraseña)
         cuenta = cur.fetchone()
+        print(cuenta)
         
     
     if cuenta:
@@ -43,8 +44,9 @@ def administrador():
 @aplicativo.route('/logoutadministrador')
 def logoutadministrador():
     session.pop('loggedin', None)
-    session.pop('id', None)
-    session.pop('username', None)
+    session.pop('Usuario', None)
+    session.pop('contraseña', None)
+    session.clear()
     return redirect(url_for('Index'))
         
 @aplicativo.route('/anadirconductor')
