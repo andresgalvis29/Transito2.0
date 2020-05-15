@@ -37,7 +37,7 @@ def administrador():
             print(Usuario)
             return render_template('admin.html')
     else:
-        flash("Datos incorrectos","warning")
+        flash("")
         return render_template('login.html')
 
 @aplicativo.route('/logoutadministrador')
@@ -65,17 +65,23 @@ def guardar_conductor():
            cur.execute('INSERT INTO Conductor (idConductor,NombreConductor,FechaNacimientoConductor,DireccionConductor,CelularConductor ) VALUES(%s,%s,%s,%s,%s)'
            ,(cedula,nombre,fechadenacimiento,direccion,celular))
            mysql.connection.commit() 
-           return 'datos guardados'
+           return render_template('admin.html')
         else: return 'No relleno todo los espacios'
     else: return 'Error'
 
 
-@aplicativo.route('/editar_conductor')
-def editar_conductor():
-    return 'Editar Conductor'
+@aplicativo.route('/anadircarro',methods=['GET','POST'])
+def añadir_carro():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM Marca')
+    datamarca = cur.fetchall()
+    cur.execute('SELECT idConductor FROM Conductor ')
+    dataconductor = cur.fetchall()
+    return render_template ('anadircarro.html',marca=datamarca,conductor=dataconductor)
 
-@aplicativo.route('/anadir_multa')
+@aplicativo.route('/guardarcarro',methods=['GET','POST'])
 def añadir_multa():
+
     return 'Añadir Multa'
 
 
