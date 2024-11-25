@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  aplicativo:
+    build: .
+    environment:
+      MYSQL_HOST: "appDB"
+    ports: 
+      - "3000:3000"
+    depends_on: 
+      - appDB
+      - phpmyadmin
+  appDB:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: andres
+      MYSQL_PASSWORD: user
+      MYSQL_DATABASE: transito
+    ports:
+      - "3306:3306"
+    volumes:
+      - /C:/xampp/mysql/data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: andres
+      MYSQL_PASSWORD: user
+    depends_on:
+      - appDB
+    links:
+      - appDB
+
+      
