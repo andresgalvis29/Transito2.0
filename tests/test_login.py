@@ -1,0 +1,2 @@
+from aplicativo import administrador
+

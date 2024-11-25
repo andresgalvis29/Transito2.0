@@ -1,12 +1,13 @@
 from flask import Flask ,render_template, request, redirect,url_for, flash,session
 from flask_mysqldb import MySQL
+import logging
 import hashlib
 
 aplicativo = Flask(__name__)
-aplicativo.config['MYSQL_HOST'] = '127.0.0.1'
+aplicativo.config['MYSQL_HOST'] = 'appDB' # por si no se conecta docker conectar a 127.0.0.1
 aplicativo.config['MYSQL_USER'] = 'root'
-aplicativo.config['MYSQL_PASSWORD'] = ''
-aplicativo.config['MYSQL_DB'] = 'Transito'
+aplicativo.config['MYSQL_PASSWORD'] = 'admin'
+aplicativo.config['MYSQL_DB'] = 'transito'
 mysql = MySQL(aplicativo)
 aplicativo.secret_key = '666'
 
@@ -25,9 +26,11 @@ def administrador():
         contra = request.form['contra']
         contraseña = (hashlib.sha1((contra).encode('utf-8')).hexdigest())
         cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM Policia WHERE usuario= %s AND contraseña=%s',(Usuario,contraseña,))
+        cur.execute('SELECT * FROM Policia WHERE Usuario= %s AND Contraseña=%s',(Usuario,contraseña))
+        logging.info('Contrasena: %s',contraseña )
         print(contraseña)
         cuenta = cur.fetchone()
+        logging.info('Cuenta: %s', cuenta)
         print(cuenta)
         
     
@@ -189,4 +192,4 @@ def ver_datos2():
 
 
 if __name__ == '__main__':
-    aplicativo.run(port = 3000, debug = True)
+    aplicativo.run(host='0.0.0.0',port = 3000, debug = True)
